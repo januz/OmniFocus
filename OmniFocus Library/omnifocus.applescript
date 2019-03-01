@@ -15,7 +15,7 @@ property REPEAT_DAILY : {recurrence:"FREQ=DAILY;INTERVAL=1", repetition method:f
 property REPEAT_WEEKLY : {recurrence:"FREQ=WEEKLY;INTERVAL=1", repetition method:fixed repetition}
 property REPEAT_MONTHLY : {recurrence:"FREQ=MONTHLY;INTERVAL=1", repetition method:fixed repetition}
 
---Â» functions
+--È functions
 on selectedItems()
 	set theWindow to front document window of front document of application "OmniFocus"
 	set contentTasks to selected trees of content of theWindow
@@ -36,21 +36,21 @@ on parse(transportText)
 	parse tasks into default document with transport text transportText
 end parse
 
---Â» find
+--È find
 on findContext(contextName)
-	first flattened context of default document whose name is contextName and hidden is false
+	first flattened tag of default document whose name is contextName and hidden is false
 end findContext
 
 on findContextStarts(contextName)
-	first flattened context of default document whose name starts with contextName and hidden is false
+	first flattened tag of default document whose name starts with contextName and hidden is false
 end findContextStarts
 
 on findContextEnds(contextName)
-	first flattened context of default document whose name ends with contextName and hidden is false
+	first flattened tag of default document whose name ends with contextName and hidden is false
 end findContextEnds
 
 on findContextContains(contextName)
-	first flattened context of default document whose name contains contextName and hidden is false
+	first flattened tag of default document whose name contains contextName and hidden is false
 end findContextContains
 
 on findProject(projectName)
@@ -109,21 +109,21 @@ on findTaskContains(taskName)
 	first flattened task of default document whose name contains taskName and completed is false
 end findTaskContains
 
---Â» findAll
+--È findAll
 on findAllContexts(contextName)
-	every flattened context of default document whose name is contextName and hidden is false
+	every flattened tag of default document whose name is contextName and hidden is false
 end findAllContexts
 
 on findAllContextsStarts(contextName)
-	every flattened context of default document whose name starts with contextName and hidden is false
+	every flattened tag of default document whose name starts with contextName and hidden is false
 end findAllContextsStarts
 
 on findAllContextsEnds(contextName)
-	every flattened context of default document whose name ends with contextName and hidden is false
+	every flattened tag of default document whose name ends with contextName and hidden is false
 end findAllContextsEnds
 
 on findAllContextsContains(contextName)
-	every flattened context of default document whose name contains contextName and hidden is false
+	every flattened tag of default document whose name contains contextName and hidden is false
 end findAllContextsContains
 
 on findAllProjects(projectName)
@@ -183,7 +183,7 @@ on findAllTasksFlagged()
 end findAllTasksFlagged
 
 
---Â» allSomething
+--È allSomething
 on allTasks()
 	every flattened task of default document whose completed is false
 end allTasks
@@ -193,10 +193,10 @@ on allProjects()
 end allProjects
 
 on allContexts()
-	every flattened context of default document whose hidden is false
+	every flattened tag of default document whose hidden is false
 end allContexts
 
---Â» setSomething
+--È setSomething
 on setDue(input, dueDate)
 	repeat with _input in flatten(input)
 		set due date of _input to dueDate
@@ -235,7 +235,7 @@ on inboxTasks()
 	every inbox task of default document
 end inboxTasks
 
---Â» prepend & append
+--È prepend & append
 on namePrepend(input, prependString)
 	repeat with _input in flatten(input)
 		set name of _input to prependString & name of _input
@@ -339,7 +339,7 @@ on repeatMonthly(input)
 	setRepeat(input, REPEAT_MONTHLY)
 end repeatMonthly
 
---Â» Clear properties, etc.
+--È Clear properties, etc.
 
 on clearRepeat(input)
 	setRepeat(input, missing value)
@@ -415,7 +415,7 @@ on addColon(input)
 	
 	if text -1 of firstWordPlusOne is not ":" then
 		set textProperties to textProperties & {theRest:text -1 thru ((length of firstWord) + 2) of theText}
-		set name of input to titlecase(firstWord) & ": " & titlecase(theRest of textProperties)
+		set name of input to titlecase(firstWord) & ": " & theRest of textProperties
 	end if
 end addColon
 
@@ -427,7 +427,7 @@ on removeColon(input)
 	
 	if text -1 of firstWordPlusOne is ":" then
 		set textProperties to textProperties & {theRest:text -1 thru ((length of firstWord) + 3) of theText}
-		set name of input to titlecase(firstWord) & " " & titlecase(theRest of textProperties)
+		set name of input to titlecase(firstWord) & " " & theRest of textProperties
 	end if
 end removeColon
 
@@ -479,7 +479,7 @@ on toggleConditional(input)
 		if first word of (get name of _input) is "If" then
 			clearConditional(input)
 		else
-			set conditionalTask to text returned of (display dialog "If statementâ€¦" default answer "")
+			set conditionalTask to text returned of (display dialog "If statementÉ" default answer "")
 			setConditional(input, conditionalTask)
 		end if
 	end repeat
@@ -488,7 +488,7 @@ end toggleConditional
 on setConsider(input)
 	setPrefix(input, "Consider")
 	setRepeat(input, DEFER_DAILY)
-	setContext(input, (first flattened context whose name starts with "Consider" and hidden is false) of default document)
+	setContext(input, (first flattened tag whose name starts with "Consider" and hidden is false) of default document)
 end setConsider
 
 on clearConsider(input)
@@ -568,7 +568,7 @@ on isTask(input)
 	end using terms from
 end isTask
 
---Â» Helper Functions
+--È Helper Functions
 on flatten(aList)
 	if class of aList is not list then
 		return {aList}
